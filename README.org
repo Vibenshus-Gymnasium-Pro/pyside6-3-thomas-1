@@ -1,0 +1,25 @@
+#+title: Kryds og bolle udviklet i PySide6
+#+subtitle: Programmering
+#+author: Vibenshus Gymnasium
+
+* Introduktion
+I kender det allerede, spillet kryds og bolle.
+
+[[./img/tic_tac_toe.png]]
+
+Dagens opgave er at udvikle en simpel version af dette spil i ~PySide6~. I det følgende afsnit kan I se de minimumskrav, som ønskes opfyldt.
+
+* Minimumskrav
+Der er følgende minimumskrav til spillet.
+- Brugerfladen kan enten skrives "i hånden" eller ved hjælp af ~QtDesigner~.
+- Det skal være muligt at spille to "menneskespillere" mod hinanden.
+- Når en spiller vinder er spil, skal der komme besked om dette.
+- Der skal være mulighed for at oprette et nyt spil uden at genstarte hele programmet.
+- Det skal være tilfældigt, hvilken spiller der begynder hvert nyt spil.
+- Der er ingen skabelon denne gang, så I skal selv oprette nye filer og skrive koden.
+
+* Ekstra udfordringer
+- Flyt koden/logikken, som tjekker reglerne for spillet, fra selve koden til brugerfladen til en selvstændig fil/modul.
+- Udvikl en computerstyret medspiller (med forskellige sværhedsgrader).
+- Udvikl en highscore som tæller, hvor mange gange hver spiller har vundet.
+- Strukturér kildekoden i pakker(packages) og moduler(modules) efter anvisning i [[https://realpython.com/python-application-layouts/]]
