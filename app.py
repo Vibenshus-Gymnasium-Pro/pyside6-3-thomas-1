@@ -16,7 +16,6 @@ class Tictactoe(QObject):
     def __init__(self):
         super().__init__()
         self.ui = loader.load("ticktacktoe.ui", None)
-        self.turn = 0
         self.btnlist = []
         self.won = False
         self.cross = True
@@ -30,19 +29,15 @@ class Tictactoe(QObject):
             a.clicked.connect(lambda checked, val=a : self.pressed(val))
         self.update_status()
         
+
         
-        
-    
 
     def pressed(self, button):
         # checks if all buttons have been pressed, if so clears
         if self.won == True:
-            self.clear
-            self.won = False
-            return
-        if len(self.btnlist) >= 9:
             self.clear()
             return
+        
         
         
         
@@ -53,10 +48,12 @@ class Tictactoe(QObject):
             # Checks whose turn it is, and then writes the coresponding symbol
             if self.cross:
                 button.setText("X")
-                
+                ticktack.X[self.buttons.index(button)] = 1
                 
             else:
                 button.setText("O")
+                ticktack.O[self.buttons.index(button)] = 1
+                
                 
             self.btnlist.append(button)
             self.cross = not self.cross
@@ -74,13 +71,16 @@ class Tictactoe(QObject):
             self.ui.win.setText("O Won!")
             self.o_won += 1
             self.won = True
-
-        if ticktack.check_win() == "X":
+        elif ticktack.check_win() == "X":
             self.ui.win.setText("X Won!")
             self.x_won += 1
             self.won = True
+
+        
         if len(self.btnlist) >= 9:
+            self.won = True
             self.ui.win.setText("Tie")
+            
         
 
         self.ui.O_score.setText(f"O Wins: {self.o_won}")
@@ -96,9 +96,11 @@ class Tictactoe(QObject):
             self.ui.win.setText("X turn")
         else:
             self.ui.win.setText("O turn")
+
+        self.won = False
         
     
-    
+
         
 
 
