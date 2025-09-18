@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>619</width>
-    <height>713</height>
+    <height>755</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -355,6 +355,11 @@
      </item>
      <item>
       <widget class="QLabel" name="win">
+       <property name="font">
+        <font>
+         <pointsize>20</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -370,6 +375,32 @@
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>19</x>
+      <y>659</y>
+      <width>581</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="randomAI">
+       <property name="text">
+        <string>Easy AI</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="goodAI">
+       <property name="text">
+        <string>Hard AI</string>
        </property>
       </widget>
      </item>
