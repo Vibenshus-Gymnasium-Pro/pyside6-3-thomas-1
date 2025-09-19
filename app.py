@@ -2,6 +2,7 @@ import sys
 import ticktack
 import logic
 import time
+import rand_logic
 
 
 from PySide6.QtWidgets import QApplication
@@ -25,7 +26,8 @@ class Tictactoe(QObject):
         self.x_won = 0
         self.o_won = 0
         self.rand_ai = False
-        self.n = 0
+        self.hard_ai = False
+        self.ai_player = False
         
         
         # Creating a list of all the buttons, for use in the for loop connecting them all to the same slot with different parameters.
@@ -38,10 +40,17 @@ class Tictactoe(QObject):
         
        
         self.ui.randomAI.clicked.connect(self.ai_bool)
+        self.ui.goodAI.clicked.connect(self.hard_ai_bool)
         
     def ai_bool(self):
         print("test")
         self.rand_ai = not self.rand_ai
+        self.ai_player = not self.ai_player
+    
+    def hard_ai_bool(self):
+        print("test_hard")
+        self.hard_ai = not self.hard_ai
+        self.ai_player = not self.ai_player
     
 
     def pressed(self, button):
@@ -51,35 +60,49 @@ class Tictactoe(QObject):
             return
 
         # Checks if button has been pressed or not
-        if self.rand_ai == False:
+        if self.ai_player == False:
             if button not in self.btnlist:
             # Checks whose turn it is, and then writes the coresponding symbol
                 if self.cross:
                     button.setText("X")
                     ticktack.X[self.buttons.index(button)] = 1
+                    self.cross = not self.cross
                     
                     
                 else:
                     button.setText("O")
                     ticktack.O[self.buttons.index(button)] = 1
+                    self.cross = not self.cross
                 
                 self.btnlist.append(button)
-                
-            
-        elif self.rand_ai == True:
-            if self.cross:
-                if button not in self.btnlist:
-                    button.setText("X")
-                    ticktack.X[self.buttons.index(button)] = 1
-                    self.btnlist.append(button)
-                    self.cross = not self.cross
+        elif self.ai_player == True:
+            if self.hard_ai == True:
+                if self.cross:
+                    if button not in self.btnlist:
+                        button.setText("X")
+                        ticktack.X[self.buttons.index(button)] = 1
+                        self.btnlist.append(button)
+                        self.cross = not self.cross
+                        self.hard_ai_press()
                     
-            self.ai_press()
-            self.update_status()
+                
+            elif self.rand_ai == True:
+                if self.cross:
+                    if button not in self.btnlist:
+                        button.setText("X")
+                        ticktack.X[self.buttons.index(button)] = 1
+                        self.btnlist.append(button)
+                        self.cross = not self.cross
+                        self.ai_press()
+
+        
+                    
+            
+        self.update_status()
             
     
     def ai_press(self):
-        button = logic.pick_square(self.buttons)
+        button = rand_logic.pick_square(self.buttons)
         if len(self.btnlist) < 9:
             if button not in self.btnlist:
                 button.setText("O")
@@ -89,9 +112,16 @@ class Tictactoe(QObject):
                 return
             else:
                 self.ai_press()
-        
             
-        
+    def hard_ai_press(self):
+        move = logic.best_move("O")
+        if move is not None:
+            button = self.buttons[move]
+            if button not in self.btnlist:
+                button.setText("O")
+                ticktack.O[move] = 1
+                self.btnlist.append(button)
+                self.cross = not self.cross
                 
         
 
@@ -131,6 +161,7 @@ class Tictactoe(QObject):
         self.btnlist = []
         # Resets the backend ressources
         ticktack.reset()
+        logic.reset()
 
         # Changes the UI to reflect who starts
         if self.cross:
